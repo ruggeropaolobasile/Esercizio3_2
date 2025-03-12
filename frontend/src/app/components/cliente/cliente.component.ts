@@ -116,6 +116,8 @@ export class ClienteComponent implements OnInit {
           const index = this.clienti.findIndex((c) => c.id === cliente.id);
           if (index !== -1) this.clienti[index] = cliente;
           this.clienteModifica = null; // Reset del form di modifica
+          this.getClienti(); // Aggiorna la lista dei clienti
+
         }
       });
   }
