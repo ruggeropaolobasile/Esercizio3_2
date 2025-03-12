@@ -1,0 +1,41 @@
+<h2>Gestione Clienti</h2>
+
+<!-- Form per aggiungere un nuovo cliente -->
+<h3>Aggiungi Nuovo Cliente</h3>
+<div>
+  <input [(ngModel)]="nuovoCliente.nome" placeholder="Nome" />
+  <input [(ngModel)]="nuovoCliente.cognome" placeholder="Cognome" />
+  <input [(ngModel)]="nuovoCliente.email" placeholder="Email" />
+  <button (click)="aggiungiCliente()">Aggiungi Cliente</button>
+</div>
+
+<!-- Lista dei clienti -->
+<h3>Lista Clienti</h3>
+<ul>
+  <li *ngFor="let cliente of clienti">
+    {{ cliente.nome }} {{ cliente.cognome }} - {{ cliente.email }}
+    <button (click)="selezionaCliente(cliente)">✏️ Modifica</button>
+    <button (click)="eliminaCliente(cliente.id)">❌ Elimina</button>
+    <button (click)="selezionaAutomobile(cliente)">🚗 Visualizza Automobili</button> <!-- Bottone per mostrare le automobili -->
+  </li>
+</ul>
+
+<!-- Sezione per visualizzare le automobili del cliente -->
+<div *ngIf="automobiliVisibili.length > 0">
+  <h3>Automobili di {{ clienteModifica?.nome }} {{ clienteModifica?.cognome }}</h3>
+  <ul>
+    <li *ngFor="let auto of automobiliVisibili">
+      {{ auto.modello }}
+    </li>
+  </ul>
+</div>
+
+<!-- Form per modificare un cliente -->
+<div *ngIf="clienteModifica">
+  <h3>Modifica Cliente</h3>
+  <input [(ngModel)]="clienteModifica.nome" placeholder="Nome" />
+  <input [(ngModel)]="clienteModifica.cognome" placeholder="Cognome" />
+  <input [(ngModel)]="clienteModifica.email" placeholder="Email" />
+  <button (click)="modificaCliente()">Salva Modifiche</button>
+  <button (click)="clienteModifica = null">Annulla</button>
+</div>
