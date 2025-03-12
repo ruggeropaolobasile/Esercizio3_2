@@ -1,0 +1,22 @@
+# Escludi cartelle Node.js per frontend e backend
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Escludi dipendenze
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Escludi build di Angular/React/Vue
+dist/
+build/
+out-tsc/
+
+# Escludi file temporanei e di sistema
+.DS_Store
+Thumbs.db
+
+# Escludi impostazioni locali di VSCode
+.vscode/
+.history/
