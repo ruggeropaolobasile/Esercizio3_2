@@ -12,7 +12,10 @@ interface Cliente {
 
 interface Automobile {
   id: number;
+  marca: string;
   modello: string;
+  immatricolazione: string;
+  targa: string;
   clienteId: number;
 }
 
@@ -27,6 +30,7 @@ export class ClienteComponent implements OnInit {
   clienteModifica: Cliente | null = null;
   automobili: Automobile[] = [];
   automobiliVisibili: Automobile[] = [];
+  nuovaAutomobile: Automobile = { id: 0, marca: '', modello: '', immatricolazione: '', targa: '', clienteId: 0 };
   private apiUrl = 'http://localhost:3000/api/clienti'; // URL del backend
   private automobiliUrl = 'http://localhost:3000/api/automobili'; // URL delle automobili
 
@@ -66,6 +70,8 @@ export class ClienteComponent implements OnInit {
   // Aggiungi un nuovo cliente
   aggiungiCliente(): void {
     const { nome, cognome, email } = this.nuovoCliente;
+    console.log('Aggiungi Cliente:', this.nuovoCliente); // Aggiungi questo log
+
     if (!nome || !cognome || !email) {
       alert('Compila tutti i campi!');
       return;
@@ -88,6 +94,8 @@ export class ClienteComponent implements OnInit {
 
   // Seleziona un cliente per la modifica
   selezionaCliente(cliente: Cliente): void {
+    console.log('Cliente selezionato per modifica:', cliente); // Aggiungi questo log
+
     this.clienteModifica = { ...cliente };
   }
 
@@ -133,5 +141,17 @@ export class ClienteComponent implements OnInit {
   selezionaAutomobile(cliente: Cliente): void {
     // Filtra le automobili in base al clienteId
     this.automobiliVisibili = this.automobili.filter(auto => auto.clienteId === cliente.id);
+  }
+
+  // Aggiungi una nuova automobile
+  aggiungiAutomobile() {
+    this.nuovaAutomobile.id = this.automobili.length + 1;
+    this.automobili.push({ ...this.nuovaAutomobile });
+    this.nuovaAutomobile = { id: 0, marca: '', modello: '', immatricolazione: '', targa: '', clienteId: 0 };
+  }
+
+  // Elimina un'automobile
+  eliminaAutomobile(id: number) {
+    this.automobili = this.automobili.filter(a => a.id !== id);
   }
 }

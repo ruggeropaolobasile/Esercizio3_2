@@ -1,41 +1,123 @@
-<h2>Gestione Clienti</h2>
+<div class="container mt-5">
+  <h2 class="text-center">Gestione Clienti</h2>
 
-<!-- Form per aggiungere un nuovo cliente -->
-<h3>Aggiungi Nuovo Cliente</h3>
-<div>
-  <input [(ngModel)]="nuovoCliente.nome" placeholder="Nome" />
-  <input [(ngModel)]="nuovoCliente.cognome" placeholder="Cognome" />
-  <input [(ngModel)]="nuovoCliente.email" placeholder="Email" />
-  <button (click)="aggiungiCliente()">Aggiungi Cliente</button>
-</div>
+  <!-- Form per aggiungere un nuovo cliente -->
+  <form class="row g-3">
+    <div class="col-md-4">
+      <input [(ngModel)]="nuovoCliente.nome" name="nome" class="form-control" placeholder="Nome" />
+    </div>
+    <div class="col-md-4">
+      <input [(ngModel)]="nuovoCliente.cognome" name="cognome" class="form-control" placeholder="Cognome" />
+    </div>
+    <div class="col-md-4">
+      <input [(ngModel)]="nuovoCliente.email" name="email" class="form-control" placeholder="Email" />
+    </div>
+    <div class="col-12">
+      <button (click)="aggiungiCliente()" class="btn btn-primary">Aggiungi Cliente</button>
+    </div>
+  </form>
 
-<!-- Lista dei clienti -->
-<h3>Lista Clienti</h3>
-<ul>
-  <li *ngFor="let cliente of clienti">
-    {{ cliente.nome }} {{ cliente.cognome }} - {{ cliente.email }}
-    <button (click)="selezionaCliente(cliente)">✏️ Modifica</button>
-    <button (click)="eliminaCliente(cliente.id)">❌ Elimina</button>
-    <button (click)="selezionaAutomobile(cliente)">🚗 Visualizza Automobili</button> <!-- Bottone per mostrare le automobili -->
-  </li>
-</ul>
+  <!-- Lista dei clienti -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3>Lista Clienti</h3>
+    </div>
+    <div class="card-body">
+      <ul class="list-group">
+        <li *ngFor="let cliente of clienti" class="list-group-item d-flex justify-content-between align-items-center">
+          {{ cliente.nome }} {{ cliente.cognome }} - {{ cliente.email }}
+          <div>
+            <button (click)="selezionaCliente(cliente)" class="btn btn-warning btn-sm">✏️ Modifica</button>
+            <button (click)="eliminaCliente(cliente.id)" class="btn btn-danger btn-sm">❌ Elimina</button>
+            <button (click)="selezionaAutomobile(cliente)" class="btn btn-info btn-sm">🚗 Visualizza Automobili</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-<!-- Sezione per visualizzare le automobili del cliente -->
-<div *ngIf="automobiliVisibili.length > 0">
-  <h3>Automobili di {{ clienteModifica?.nome }} {{ clienteModifica?.cognome }}</h3>
-  <ul>
-    <li *ngFor="let auto of automobiliVisibili">
-      {{ auto.modello }}
-    </li>
-  </ul>
-</div>
+  <!-- Sezione per visualizzare le automobili del cliente -->
+  <div *ngIf="automobiliVisibili.length > 0" class="card mb-4">
+    <div class="card-header">
+      <h3>Automobili di {{ clienteModifica?.nome }} {{ clienteModifica?.cognome }}</h3>
+    </div>
+    <div class="card-body">
+      <ul class="list-group">
+        <li *ngFor="let auto of automobiliVisibili" class="list-group-item">
+          {{ auto.modello }}
+        </li>
+      </ul>
+    </div>
+  </div>
 
 <!-- Form per modificare un cliente -->
-<div *ngIf="clienteModifica">
-  <h3>Modifica Cliente</h3>
-  <input [(ngModel)]="clienteModifica.nome" placeholder="Nome" />
-  <input [(ngModel)]="clienteModifica.cognome" placeholder="Cognome" />
-  <input [(ngModel)]="clienteModifica.email" placeholder="Email" />
-  <button (click)="modificaCliente()">Salva Modifiche</button>
-  <button (click)="clienteModifica = null">Annulla</button>
+<div *ngIf="clienteModifica" class="card mb-4">
+  <div class="card-header">
+    <h3>Modifica Cliente</h3>
+  </div>
+  <div class="card-body">
+    <form class="row g-3">
+      <div class="col-md-4">
+        <input [(ngModel)]="clienteModifica.nome" name="nomeModifica" class="form-control" placeholder="Nome" />
+      </div>
+      <div class="col-md-4">
+        <input [(ngModel)]="clienteModifica.cognome" name="cognomeModifica" class="form-control" placeholder="Cognome" />
+      </div>
+      <div class="col-md-4">
+        <input [(ngModel)]="clienteModifica.email" name="emailModifica" class="form-control" placeholder="Email" />
+      </div>
+      <div class="col-12">
+        <button (click)="modificaCliente()" type="button" class="btn btn-success">Salva Modifiche</button>
+        <button (click)="clienteModifica = null" type="button" class="btn btn-secondary">Annulla</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <h2 class="text-center">Gestione Automobili</h2>
+
+  <!-- Form per aggiungere una nuova automobile -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3>Aggiungi Nuova Automobile</h3>
+    </div>
+    <div class="card-body">
+
+      <form class="row g-3">
+        <div class="col-md-3">
+          <input [(ngModel)]="nuovaAutomobile.marca" name="marca" class="form-control" placeholder="Marca" />
+        </div>
+        <div class="col-md-3">
+          <input [(ngModel)]="nuovaAutomobile.modello" name="modello" class="form-control" placeholder="Modello" />
+        </div>
+        <div class="col-md-3">
+          <input [(ngModel)]="nuovaAutomobile.immatricolazione" name="immatricolazione" type="date" class="form-control" />
+        </div>
+        <div class="col-md-3">
+          <input [(ngModel)]="nuovaAutomobile.targa" name="targa" class="form-control" placeholder="Targa" />
+        </div>
+        <div class="col-12">
+          <button (click)="aggiungiAutomobile()" class="btn btn-primary">Aggiungi Automobile</button>
+        </div>
+      </form>
+      
+
+    </div>
+  </div>
+
+  <!-- Lista delle automobili -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3>Lista Automobili</h3>
+    </div>
+    <div class="card-body">
+      <ul class="list-group">
+        <li *ngFor="let auto of automobili" class="list-group-item d-flex justify-content-between align-items-center">
+          {{ auto.marca }} {{ auto.modello }} - Targa: {{ auto.targa }} (Immatricolata: {{ auto.immatricolazione | date:'yyyy-MM-dd' }})
+          <button (click)="eliminaAutomobile(auto.id)" class="btn btn-danger btn-sm">❌ Elimina</button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
