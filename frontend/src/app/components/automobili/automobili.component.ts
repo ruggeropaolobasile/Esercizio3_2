@@ -4,6 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
+interface Cliente {
+  id: number;
+  nome: string;
+  cognome: string;
+  email: string;
+}
 
 interface Automobile {
   id_automobile: number;
@@ -23,22 +29,25 @@ export class AutomobileComponent implements OnInit {
   // Se nessun filtro viene passato, idCliente rimane null e vengono mostrate tutte le auto.
   idCliente: number | null = null;
   automobili: Automobile[] = [];
-  automobileInserimento: Automobile = { 
-    id_automobile: 0, 
-    marca: '', 
-    modello: '', 
-    immatricolazione: '', 
-    targa: '', 
-    id_cliente: 0 
+  automobileInserimento: Automobile = {
+    id_automobile: 0,
+    marca: '',
+    modello: '',
+    immatricolazione: '',
+    targa: '',
+    id_cliente: 0
   };
 
   private apiUrl = 'http://localhost:3000/api/automobili';
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     // Legge il parametro query "id_cliente" (se presente) e lo assegna
     this.route.queryParams.subscribe(params => {
+      
+      console.log("Query Params ricevuti:", params);
+
       if (params['id_cliente']) {
         this.idCliente = +params['id_cliente'];
         // Imposta l'id nel modello di inserimento in modo che la nuova auto sia associata al cliente
@@ -85,13 +94,13 @@ export class AutomobileComponent implements OnInit {
         if (auto) {
           this.automobili.push(auto);
           // Resetta il form; se è presente un filtro, mantieni l'id_cliente nel modello
-          this.automobileInserimento = { 
-            id_automobile: 0, 
-            marca: '', 
-            modello: '', 
-            immatricolazione: '', 
-            targa: '', 
-            id_cliente: this.idCliente !== null ? this.idCliente : 0 
+          this.automobileInserimento = {
+            id_automobile: 0,
+            marca: '',
+            modello: '',
+            immatricolazione: '',
+            targa: '',
+            id_cliente: this.idCliente !== null ? this.idCliente : 0
           };
         }
       });
@@ -99,7 +108,8 @@ export class AutomobileComponent implements OnInit {
 
   // Elimina un'automobile
   eliminaAutomobile(idAutomobile: number): void {
-    this.http.delete(`${this.apiUrl}/${idAutomobile}`)
+    this.http
+      .delete(`${this.apiUrl}/${idAutomobile}`)
       .pipe(
         catchError((error) => {
           console.error("Errore nell'eliminazione dell'automobile:", error);

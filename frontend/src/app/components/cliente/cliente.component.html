@@ -25,6 +25,7 @@
     <div class="card-body">
       <ul class="list-group">
         <li *ngFor="let cliente of clienti" class="list-group-item d-flex justify-content-between align-items-center">
+          <input type="checkbox" [(ngModel)]="cliente.selezionato" name="selezionato{{cliente.id}}" />
           {{ cliente.nome }} {{ cliente.cognome }} - {{ cliente.email }}
           <div>
             <button (click)="selezionaCliente(cliente)" class="btn btn-warning btn-sm">✏️ Modifica</button>
@@ -44,80 +45,78 @@
     <div class="card-body">
       <ul class="list-group">
         <li *ngFor="let auto of automobiliVisibili" class="list-group-item">
-          {{ auto.modello }}
+          {{ auto.marca }} {{ auto.modello }} - Targa: {{ auto.targa }} (Immatricolata: {{ auto.immatricolazione | date:'yyyy-MM-dd' }})
         </li>
       </ul>
     </div>
   </div>
 
-<!-- Form per modificare un cliente -->
-<div *ngIf="clienteModifica" class="card mb-4">
-  <div class="card-header">
-    <h3>Modifica Cliente</h3>
-  </div>
-  <div class="card-body">
-    <form class="row g-3">
-      <div class="col-md-4">
-        <input [(ngModel)]="clienteModifica.nome" name="nomeModifica" class="form-control" placeholder="Nome" />
-      </div>
-      <div class="col-md-4">
-        <input [(ngModel)]="clienteModifica.cognome" name="cognomeModifica" class="form-control" placeholder="Cognome" />
-      </div>
-      <div class="col-md-4">
-        <input [(ngModel)]="clienteModifica.email" name="emailModifica" class="form-control" placeholder="Email" />
-      </div>
-      <div class="col-12">
-        <button (click)="modificaCliente()" type="button" class="btn btn-success">Salva Modifiche</button>
-        <button (click)="clienteModifica = null" type="button" class="btn btn-secondary">Annulla</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="container mt-5">
-  <h2 class="text-center">Gestione Automobili</h2>
-
-  <!-- Form per aggiungere una nuova automobile -->
-  <div class="card mb-4">
+  <!-- Form per modificare un cliente -->
+  <div *ngIf="clienteModifica" class="card mb-4">
     <div class="card-header">
-      <h3>Aggiungi Nuova Automobile</h3>
+      <h3>Modifica Cliente</h3>
     </div>
     <div class="card-body">
-
       <form class="row g-3">
-        <div class="col-md-3">
-          <input [(ngModel)]="nuovaAutomobile.marca" name="marca" class="form-control" placeholder="Marca" />
+        <div class="col-md-4">
+          <input [(ngModel)]="clienteModifica.nome" name="modificaNome" class="form-control" placeholder="Nome" />
         </div>
-        <div class="col-md-3">
-          <input [(ngModel)]="nuovaAutomobile.modello" name="modello" class="form-control" placeholder="Modello" />
+        <div class="col-md-4">
+          <input [(ngModel)]="clienteModifica.cognome" name="modificaCognome" class="form-control" placeholder="Cognome" />
         </div>
-        <div class="col-md-3">
-          <input [(ngModel)]="nuovaAutomobile.immatricolazione" name="immatricolazione" type="date" class="form-control" />
-        </div>
-        <div class="col-md-3">
-          <input [(ngModel)]="nuovaAutomobile.targa" name="targa" class="form-control" placeholder="Targa" />
+        <div class="col-md-4">
+          <input [(ngModel)]="clienteModifica.email" name="modificaEmail" class="form-control" placeholder="Email" />
         </div>
         <div class="col-12">
-          <button (click)="aggiungiAutomobile()" class="btn btn-primary">Aggiungi Automobile</button>
+          <button (click)="modificaCliente()" class="btn btn-success">Salva Modifiche</button>
+          <button (click)="clienteModifica = null" class="btn btn-secondary">Annulla</button>
         </div>
       </form>
-      
-
     </div>
   </div>
 
-  <!-- Lista delle automobili -->
-  <div class="card mb-4">
-    <div class="card-header">
-      <h3>Lista Automobili</h3>
+  <div class="container mt-5">
+    <h2 class="text-center">Gestione Automobili</h2>
+
+    <!-- Form per aggiungere una nuova automobile -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3>Aggiungi Nuova Automobile</h3>
+      </div>
+      <div class="card-body">
+        <form class="row g-3">
+          <div class="col-md-3">
+            <input [(ngModel)]="nuovaAutomobile.marca" name="marca" class="form-control" placeholder="Marca" />
+          </div>
+          <div class="col-md-3">
+            <input [(ngModel)]="nuovaAutomobile.modello" name="modello" class="form-control" placeholder="Modello" />
+          </div>
+          <div class="col-md-3">
+            <input [(ngModel)]="nuovaAutomobile.immatricolazione" name="immatricolazione" type="date" class="form-control" />
+          </div>
+          <div class="col-md-3">
+            <input [(ngModel)]="nuovaAutomobile.targa" name="targa" class="form-control" placeholder="Targa" />
+          </div>
+          <div class="col-12">
+            <button (click)="aggiungiAutomobile()" class="btn btn-primary">Aggiungi Automobile</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="card-body">
-      <ul class="list-group">
-        <li *ngFor="let auto of automobili" class="list-group-item d-flex justify-content-between align-items-center">
-          {{ auto.marca }} {{ auto.modello }} - Targa: {{ auto.targa }} (Immatricolata: {{ auto.immatricolazione | date:'yyyy-MM-dd' }})
-          <button (click)="eliminaAutomobile(auto.id)" class="btn btn-danger btn-sm">❌ Elimina</button>
-        </li>
-      </ul>
+
+    <!-- Lista delle automobili -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3>Lista Automobili</h3>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li *ngFor="let auto of automobili" class="list-group-item d-flex justify-content-between align-items-center">
+            {{ auto.marca }} {{ auto.modello }} - Targa: {{ auto.targa }} (Immatricolata: {{ auto.immatricolazione | date:'yyyy-MM-dd' }})
+            <button (click)="eliminaAutomobile(auto.id)" class="btn btn-danger btn-sm">❌ Elimina</button>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

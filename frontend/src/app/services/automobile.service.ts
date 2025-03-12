@@ -15,7 +15,7 @@ export class AutomobileService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  // Aggiungi una nuova automobile
+  // Aggiungi una nuova automobile da un oggetto auto
   addAutomobile(auto: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, auto);
   }

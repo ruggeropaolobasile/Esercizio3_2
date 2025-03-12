@@ -87,7 +87,35 @@ router.post('/clienti', (req, res) => {
     );
 });
 
-// PUT: Modifica un cliente
+/**
+ * @swagger
+ * /api/clienti/{id}:
+ *   put:
+ *     summary: Modifica un cliente
+ *     tags: [Clienti]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID del cliente
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Cliente'
+ *     responses:
+ *       200:
+ *         description: Cliente modificato con successo
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cliente'
+ *       404:
+ *         description: Cliente non trovato
+ */
 router.put('/clienti/:id', (req, res) => {
     const { id } = req.params;
     const { nome, cognome, email } = req.body;
@@ -104,7 +132,25 @@ router.put('/clienti/:id', (req, res) => {
     );
 });
 
-// DELETE: Elimina un cliente
+/**
+ * @swagger
+ * /api/clienti/{id}:
+ *   delete:
+ *     summary: Elimina un cliente
+ *     tags: [Clienti]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID del cliente
+ *     responses:
+ *       204:
+ *         description: Cliente eliminato con successo
+ *       404:
+ *         description: Cliente non trovato
+ */
 router.delete('/clienti/:id', (req, res) => {
     const { id } = req.params;
     db.query('DELETE FROM cliente WHERE id = ?', [id], (err, result) => {

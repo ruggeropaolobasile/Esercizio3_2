@@ -8,6 +8,7 @@ interface Cliente {
   nome: string;
   cognome: string;
   email: string;
+  selezionato?: boolean;
 }
 
 interface Automobile {
@@ -95,7 +96,6 @@ export class ClienteComponent implements OnInit {
   // Seleziona un cliente per la modifica
   selezionaCliente(cliente: Cliente): void {
     console.log('Cliente selezionato per modifica:', cliente); // Aggiungi questo log
-
     this.clienteModifica = { ...cliente };
   }
 
@@ -117,7 +117,6 @@ export class ClienteComponent implements OnInit {
           if (index !== -1) this.clienti[index] = cliente;
           this.clienteModifica = null; // Reset del form di modifica
           this.getClienti(); // Aggiorna la lista dei clienti
-
         }
       });
   }
@@ -146,14 +145,41 @@ export class ClienteComponent implements OnInit {
   }
 
   // Aggiungi una nuova automobile
-  aggiungiAutomobile() {
-    this.nuovaAutomobile.id = this.automobili.length + 1;
-    this.automobili.push({ ...this.nuovaAutomobile });
-    this.nuovaAutomobile = { id: 0, marca: '', modello: '', immatricolazione: '', targa: '', clienteId: 0 };
+  aggiungiAutomobile(): void {
+    const clienteSelezionato = this.clienti.find(cliente => cliente.selezionato);
+    if (!clienteSelezionato) {
+      alert('Seleziona un cliente per aggiungere un\'automobile.');
+      return;
+    }
+    this.nuovaAutomobile.clienteId = clienteSelezionato.id;
+    this.http
+      .post<Automobile>(this.automobiliUrl, this.nuovaAutomobile)
+      .pipe(
+        catchError((error) => {
+          console.error("Errore nell'aggiunta dell'automobile:", error);
+          return of(null);
+        })
+      )
+      .subscribe((auto) => {
+        if (auto) {
+          this.automobili.push(auto);
+          this.nuovaAutomobile = { id: 0, marca: '', modello: '', immatricolazione: '', targa: '', clienteId: 0 }; // Reset del form
+        }
+      });
   }
 
   // Elimina un'automobile
-  eliminaAutomobile(id: number) {
-    this.automobili = this.automobili.filter(a => a.id !== id);
+  eliminaAutomobile(id: number): void {
+    this.http
+      .delete(`${this.automobiliUrl}/${id}`)
+      .pipe(
+        catchError((error) => {
+          console.error("Errore nell'eliminazione dell'automobile:", error);
+          return of(null);
+        })
+      )
+      .subscribe(() => {
+        this.automobili = this.automobili.filter(a => a.id !== id);
+      });
   }
 }
