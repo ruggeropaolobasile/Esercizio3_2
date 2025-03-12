@@ -2,7 +2,52 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
 
-// GET: Recupera tutti i clienti
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Cliente:
+ *       type: object
+ *       required:
+ *         - nome
+ *         - cognome
+ *         - email
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: ID del cliente
+ *         nome:
+ *           type: string
+ *           description: Nome del cliente
+ *         cognome:
+ *           type: string
+ *           description: Cognome del cliente
+ *         email:
+ *           type: string
+ *           description: Email del cliente
+ *       example:
+ *         id: 1
+ *         nome: Mario
+ *         cognome: Rossi
+ *         email: mario.rossi@example.com
+ */
+
+/**
+ * @swagger
+ * /api/clienti:
+ *   get:
+ *     summary: Recupera la lista di tutti i clienti
+ *     tags: [Clienti]
+ *     responses:
+ *       200:
+ *         description: Lista di tutti i clienti
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Cliente'
+ */
 router.get('/clienti', (req, res) => {
     db.query('SELECT * FROM cliente', (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -10,7 +55,26 @@ router.get('/clienti', (req, res) => {
     });
 });
 
-// POST: Aggiungi un cliente
+/**
+ * @swagger
+ * /api/clienti:
+ *   post:
+ *     summary: Aggiungi un nuovo cliente
+ *     tags: [Clienti]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Cliente'
+ *     responses:
+ *       201:
+ *         description: Cliente aggiunto con successo
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cliente'
+ */
 router.post('/clienti', (req, res) => {
     const { nome, cognome, email } = req.body;
     db.query(
