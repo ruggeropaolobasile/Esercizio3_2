@@ -93,6 +93,8 @@ export class AutomobileComponent implements OnInit {
 
   // Inserisce una nuova automobile; se è presente un filtro (idCliente), lo assegna al modello.
   aggiungiAutomobile(): void {
+    console.log('Dati automobile da inviare:', this.automobileInserimento);
+
     if (this.idCliente !== null) {
       this.automobileInserimento.id_cliente = this.idCliente;
     }
