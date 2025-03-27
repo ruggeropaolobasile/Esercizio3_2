@@ -1,14 +1,21 @@
-<h2>Gestione Automobili</h2>
+<h2>Gestione Automobili -</h2>
 
 <!-- Form per aggiungere una nuova automobile -->
-<h3>Aggiungi Nuova Automobile</h3>
+<h3>Aggiungi Nuova Automobile -</h3>
 <div>
   <input [(ngModel)]="automobileInserimento.marca" placeholder="Marca" />
   <input [(ngModel)]="automobileInserimento.modello" placeholder="Modello" />
   <input [(ngModel)]="automobileInserimento.immatricolazione" type="date" placeholder="Immatricolazione" />
   <input [(ngModel)]="automobileInserimento.targa" placeholder="Targa" />
   <!-- Campo ID Cliente: se è presente un filtro, viene messo in sola lettura -->
-  <input [(ngModel)]="automobileInserimento.id_cliente" placeholder="ID Cliente" type="number" [readonly]="idCliente !== null" />
+  <select [(ngModel)]="automobileInserimento.id_cliente" [disabled]="idCliente !== null">
+    <option value="">-- Seleziona un cliente --</option>
+    <option *ngFor="let cliente of clienti" [value]="cliente.id">
+      {{ cliente.nome }} {{ cliente.cognome }} - {{ cliente.email }}
+    </option>
+  </select>
+  
+  
   <button (click)="aggiungiAutomobile()">Aggiungi Automobile</button>
 </div>
 

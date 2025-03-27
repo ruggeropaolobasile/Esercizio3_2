@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ClienteComponent } from './components/cliente/cliente.component';
 import { AutomobileComponent } from './components/automobili/automobili.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AutomobileComponent } from './components/automobili/automobili.componen
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    NgSelectModule,
     RouterModule.forRoot([
       { path: '1.1-inserimento-cliente', component: ClienteComponent },
       { path: '1.2-inserimento-automobile', component: AutomobileComponent },

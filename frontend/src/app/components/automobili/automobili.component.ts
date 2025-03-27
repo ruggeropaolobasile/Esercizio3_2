@@ -11,6 +11,8 @@ interface Cliente {
   email: string;
 }
 
+
+
 interface Automobile {
   id_automobile: number;
   marca: string;
@@ -41,11 +43,12 @@ export class AutomobileComponent implements OnInit {
   private apiUrl = 'http://localhost:3000/api/automobili';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
-
+  clienti: Cliente[] = [];
   ngOnInit(): void {
+    
     // Legge il parametro query "id_cliente" (se presente) e lo assegna
     this.route.queryParams.subscribe(params => {
-      
+
       console.log("Query Params ricevuti:", params);
 
       if (params['id_cliente']) {
@@ -57,6 +60,17 @@ export class AutomobileComponent implements OnInit {
       }
       this.getAutomobili();
     });
+
+    this.http.get<Cliente[]>('http://localhost:3000/api/clienti')
+      .pipe(
+        catchError((error) => {
+          console.error('Errore nel recupero dei clienti:', error);
+          return of([]);
+        })
+      )
+      .subscribe((data) => {
+        this.clienti = data;
+      });
   }
 
   // Recupera le automobili: se idCliente è valorizzato, aggiunge il filtro; altrimenti restituisce tutte le auto.
