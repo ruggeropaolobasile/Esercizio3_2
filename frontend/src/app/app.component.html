@@ -1,9 +1,29 @@
+<div class="container mt-3">
+  <select class="form-select w-50 mb-4" (change)="naviga($event)">
+    <option selected disabled>-- Seleziona un'opzione --</option>
+    <optgroup label="1. Inserimento">
+      <option value="/1.1-inserimento-cliente">1.1 Inserimento Cliente</option>
+      <option value="/1.2-inserimento-automobile">1.2 Inserimento Automobile</option>
+    </optgroup>
+    <optgroup label="2. Visualizzazione">
+      <option value="/2.1-visualizzazione-cliente">2.1 Visualizzazione Clienti</option>
+      <option value="/2.2-visualizzazione-automobile">2.2 Visualizzazione Automobili</option>
+    </optgroup>
+  </select>
+</div>
+
+<router-outlet></router-outlet>
+
+
+
+<!--
 <div class="container">
   <h1>Gestione Auto e Clienti</h1>
   
-  <!-- Visualizza il componente Cliente -->
+  
   <app-cliente></app-cliente>
 
-  <!-- Visualizza il componente Automobile -->
   <app-automobile></app-automobile>
 </div>
+
+    -->

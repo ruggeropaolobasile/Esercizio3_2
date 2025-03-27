@@ -1,27 +1,32 @@
-// app.module.ts
-
-import { NgModule } from '@angular/core'; // Importa NgModule
-import { BrowserModule } from '@angular/platform-browser'; // Importa BrowserModule
-import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
-import { FormsModule } from '@angular/forms'; // Importa FormsModule
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { AppComponent } from './app.component'; // Assicurati che il percorso sia corretto
-import { ClienteComponent } from './components/cliente/cliente.component'; 
+
+import { AppComponent } from './app.component';
+import { ClienteComponent } from './components/cliente/cliente.component';
 import { AutomobileComponent } from './components/automobili/automobili.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClienteComponent,
-    AutomobileComponent // Aggiungi qui il tuo GarageComponent
+    AutomobileComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([])
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '1.1-inserimento-cliente', component: ClienteComponent },
+      { path: '1.2-inserimento-automobile', component: AutomobileComponent },
+      { path: '2.1-visualizzazione-cliente', component: ClienteComponent },
+      { path: '2.2-visualizzazione-automobile', component: AutomobileComponent },
+      { path: '', redirectTo: '2.1-visualizzazione-cliente', pathMatch: 'full' },
+    ])
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
