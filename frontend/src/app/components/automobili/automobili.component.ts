@@ -14,7 +14,7 @@ interface Cliente {
 
 
 interface Automobile {
-  id_automobile: number;
+  id: number;
   marca: string;
   modello: string;
   immatricolazione: string;
@@ -32,7 +32,7 @@ export class AutomobileComponent implements OnInit {
   idCliente: number | null = null;
   automobili: Automobile[] = [];
   automobileInserimento: Automobile = {
-    id_automobile: 0,
+    id: 0,
     marca: '',
     modello: '',
     immatricolazione: '',
@@ -91,6 +91,7 @@ export class AutomobileComponent implements OnInit {
       });
   }
 
+  // automobile.component.ts
   // Inserisce una nuova automobile; se è presente un filtro (idCliente), lo assegna al modello.
   aggiungiAutomobile(): void {
     console.log('Dati automobile da inviare:', this.automobileInserimento);
@@ -108,10 +109,10 @@ export class AutomobileComponent implements OnInit {
       )
       .subscribe((auto) => {
         if (auto) {
-          this.automobili.push(auto);
+          this.getAutomobili(); // 🔄 Ricarica lista aggiornata
           // Resetta il form; se è presente un filtro, mantieni l'id_cliente nel modello
           this.automobileInserimento = {
-            id_automobile: 0,
+            id: 0,
             marca: '',
             modello: '',
             immatricolazione: '',
@@ -133,7 +134,7 @@ export class AutomobileComponent implements OnInit {
         })
       )
       .subscribe(() => {
-        this.automobili = this.automobili.filter(auto => auto.id_automobile !== idAutomobile);
+        this.automobili = this.automobili.filter(auto => auto.id !== idAutomobile);
       });
   }
 }
