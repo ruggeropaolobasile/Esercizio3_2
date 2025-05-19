@@ -7,7 +7,7 @@
 
     Ulteriori informazioni sono disponibili digitando NET HELPMSG 3534.
 
-2 mysqld --console (ps amministratore)  
+2 mysqld --console (ps amministratore)          OK
 #basile end
 
 

@@ -8,13 +8,12 @@
   <input [(ngModel)]="automobileInserimento.immatricolazione" type="date" placeholder="Immatricolazione" />
   <input [(ngModel)]="automobileInserimento.targa" placeholder="Targa" />
   <!-- Campo ID Cliente: se è presente un filtro, viene messo in sola lettura -->
-  <ng-select
-  [(ngModel)]="automobileInserimento.id_cliente"
-  [items]="clienti"
-  bindLabel="nome"
-  bindValue="id"
-  placeholder="-- Seleziona un cliente --">
-</ng-select>
+<select [(ngModel)]="automobileInserimento.id_cliente">
+  <option [ngValue]="null" disabled selected>-- Seleziona un cliente --</option>
+  <option *ngFor="let cliente of clienti" [ngValue]="cliente.id">
+    {{ cliente.nome }}
+  </option>
+</select>
   
   
   <button (click)="aggiungiAutomobile()">Aggiungi Automobile</button>
