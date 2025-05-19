@@ -24,3 +24,34 @@ backend npm start
 
 appunti 
 28-04-2025 progetto caricato correttamente in locale
+__________________________________
+
+trovare libreria gratis costruisce un istogramma dovrebbe per ogni marca il prezzo totale automobili
+solo quelle vendute 
+
+____________________________
+
+breadcrumb 
+
+burger menu
+
+_______________________________
+
+
+istogramma con il marchio dell'auto che ha fatto guadagnare di più
+
+4/28/2025 12:00 PM
+
+______________________________________________________
+
+
+eliminare tasto visualizza automobile 
+
+
+_______________
+
+inserimento nuovo cliente 
+inserimento nuova automobile 
+
+visualizza cliente 
+visualizza automobili disponibili 
