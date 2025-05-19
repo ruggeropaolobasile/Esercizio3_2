@@ -1,5 +1,5 @@
-import { Router } from '@angular/router';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'auto-management';
-
   constructor(private router: Router) {}
 
   naviga(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    const path = selectElement.value;
-    if (path) {
-      this.router.navigate([path]);
-    }
+    const target = event.target as HTMLSelectElement;
+    const route = target.value;
+    this.router.navigate([route]); // Naviga alla rotta selezionata
   }
 }

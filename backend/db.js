@@ -1,5 +1,5 @@
+// filepath: C:\Users\A566apulia\Desktop\prova\Esercizio3_2\backend\db.js
 const mysql = require('mysql');
-const db = require('C:/Users/A566apulia/Desktop/prova/Esercizio3_2/backend/config/database.js');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -17,5 +17,3 @@ connection.connect((err) => {
 });
 
 module.exports = connection;
-
-

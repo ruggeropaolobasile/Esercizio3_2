@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/database');
+const db = require('../db'); // Richiedi il file db.js
 
 /**
  * @swagger
@@ -48,117 +48,44 @@ const db = require('../config/database');
  *               items:
  *                 $ref: '#/components/schemas/Cliente'
  */
-router.get('/clienti', (req, res) => {
+router.get('/', (req, res) => {
     db.query('SELECT * FROM cliente', (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
+        if (err) {
+            console.error('Errore durante l\'esecuzione della query:', err);
+            res.status(500).json({ error: 'Errore durante la visualizzazione dei clienti' });
+            return;
+        }
         res.json(results);
     });
 });
 
-/**
- * @swagger
- * /api/clienti:
- *   post:
- *     summary: Aggiungi un nuovo cliente
- *     tags: [Clienti]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Cliente'
- *     responses:
- *       201:
- *         description: Cliente aggiunto con successo
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Cliente'
- */
-router.post('/clienti', (req, res) => {
-    const { nome, cognome, email } = req.body;
-    db.query(
-        'INSERT INTO cliente (nome, cognome, email) VALUES (?, ?, ?)',
-        [nome, cognome, email],
-        (err, result) => {
-            if (err) return res.status(500).json({ error: err.message });
-            res.status(201).json({ id: result.insertId, nome, cognome, email });
+// Rotta per ottenere un cliente specifico
+router.get('/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('SELECT * FROM clienti WHERE id = ?', [id], (err, results) => {
+        if (err) {
+            console.error('Errore durante l\'esecuzione della query:', err);
+            res.status(500).send('Errore del server');
+            return;
         }
-    );
+        if (results.length === 0) {
+            res.status(404).send('Cliente non trovato');
+            return;
+        }
+        res.json(results[0]);
+    });
 });
 
-/**
- * @swagger
- * /api/clienti/{id}:
- *   put:
- *     summary: Modifica un cliente
- *     tags: [Clienti]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *         description: ID del cliente
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Cliente'
- *     responses:
- *       200:
- *         description: Cliente modificato con successo
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Cliente'
- *       404:
- *         description: Cliente non trovato
- */
-router.put('/clienti/:id', (req, res) => {
-    const { id } = req.params;
-    const { nome, cognome, email } = req.body;
-    db.query(
-        'UPDATE cliente SET nome = ?, cognome = ?, email = ? WHERE id = ?',
-        [nome, cognome, email, id],
-        (err, result) => {
-            if (err) return res.status(500).json({ error: err.message });
-            if (result.affectedRows === 0) {
-                return res.status(404).json({ error: 'Cliente non trovato' });
-            }
-            res.json({ id, nome, cognome, email });
+// Rotta per eliminare un cliente
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    db.query('DELETE FROM clienti WHERE id = ?', [id], (err, results) => {
+        if (err) {
+            console.error('Errore durante l\'esecuzione della query:', err);
+            res.status(500).send('Errore del server');
+            return;
         }
-    );
-});
-
-/**
- * @swagger
- * /api/clienti/{id}:
- *   delete:
- *     summary: Elimina un cliente
- *     tags: [Clienti]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         required: true
- *         description: ID del cliente
- *     responses:
- *       204:
- *         description: Cliente eliminato con successo
- *       404:
- *         description: Cliente non trovato
- */
-router.delete('/clienti/:id', (req, res) => {
-    const { id } = req.params;
-    db.query('DELETE FROM cliente WHERE id = ?', [id], (err, result) => {
-        if (err) return res.status(500).json({ error: err.message });
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'Cliente non trovato' });
-        }
-        res.status(204).send(); // No Content
+        res.status(200).send('Cliente eliminato con successo');
     });
 });
 

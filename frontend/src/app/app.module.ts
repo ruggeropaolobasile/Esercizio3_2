@@ -1,34 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { ClienteComponent } from './components/cliente/cliente.component';
-import { AutomobileComponent } from './components/automobili/automobili.component';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { AppRoutingModule } from './app-routing.module'; // Modulo di routing
+import { AutomobiliModule } from './components/automobile/automobile.module'; // Modulo per le automobili
+import { ClienteModule } from './components/cliente/cliente.module'; // Modulo per i clienti
+
+import { AppComponent } from './app.component'; // Componente principale
+import { HomeComponent } from './home/home.component'; // Componente home
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClienteComponent,
-    AutomobileComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    NgSelectModule,
-    RouterModule.forRoot([
-      { path: '1.1-inserimento-cliente', component: ClienteComponent },
-      { path: '1.2-inserimento-automobile', component: AutomobileComponent },
-      { path: '2.1-visualizzazione-cliente', component: ClienteComponent },
-      { path: '2.2-visualizzazione-automobile', component: AutomobileComponent },
-      { path: '', redirectTo: '2.1-visualizzazione-cliente', pathMatch: 'full' },
-    ])
+    AppRoutingModule,
+    RouterModule,
+    AutomobiliModule,
+    ClienteModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

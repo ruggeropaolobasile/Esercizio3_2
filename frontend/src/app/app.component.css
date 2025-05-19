@@ -3,3 +3,23 @@ select {
     padding: 6px;
     font-size: 16px;
   }
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: linear-gradient(to right, #003366, #0066cc); /* Sfondo sfumato blu */
+  color: white; /* Colore del testo */
+}
+
+.logo {
+  height: 50px; /* Altezza del logo */
+  width: auto; /* Mantieni le proporzioni */
+  margin-right: 15px; /* Spazio tra il logo e la scritta */
+}
+
+.title {
+  font-size: 24px; /* Dimensione del testo */
+  font-weight: bold; /* Testo in grassetto */
+  margin: 0; /* Rimuovi margini */
+}
