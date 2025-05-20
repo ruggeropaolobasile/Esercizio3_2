@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AutomobileComponent } from './automobile.component'; // Assicurati che il percorso sia corretto
+import { AutomobileComponent } from './automobile.component';
+import { AutomobileDisponibileComponent } from '../automobile-disponibile/automobile-disponibile.component';
 
 @NgModule({
-  declarations: [AutomobileComponent],
+  declarations: [
+    AutomobileComponent,
+    AutomobileDisponibileComponent
+  ],
   imports: [
     CommonModule,
     FormsModule
   ],
-  exports: [AutomobileComponent]
+  exports: [
+    AutomobileComponent,
+    AutomobileDisponibileComponent
+  ]
 })
-export class AutomobileModule {}
+export class AutomobileModule { }

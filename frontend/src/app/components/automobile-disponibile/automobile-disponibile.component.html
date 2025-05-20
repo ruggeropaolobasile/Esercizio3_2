@@ -1,1 +1,5 @@
-<p>automobili-disponibili works!</p>
+<ul>
+  <li *ngFor="let auto of automobili">
+    {{ auto.marca }} - {{ auto.modello }} - {{ auto.prezzo }} €
+  </li>
+</ul>

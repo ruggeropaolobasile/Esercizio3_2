@@ -14,11 +14,9 @@ export class AutomobileComponent implements OnInit {
     id_cliente: null
   };
 
-  clienti: any[] = []; // eventualmente tipizza7
-
-  // ✅ AGGIUNGI QUESTA PROPRIETÀ
+  clienti: any[] = [];
   automobili: any[] = [];
-  
+
   aggiungiAutomobile() {
     // logica da completare
   }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module'; // Modulo di routing
 import { AutomobileModule } from './components/automobile/automobile.module'; // Modulo per le automobili
@@ -18,8 +19,9 @@ import { HomeComponent } from './home/home.component'; // Componente home
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    AutomobileModule, // Assicurati che AutomobileModule sia correttamente definito come NgModule
-    ClienteModule
+    AutomobileModule,
+    ClienteModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

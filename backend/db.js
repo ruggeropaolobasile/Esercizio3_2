@@ -4,8 +4,9 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '', // Lascia vuoto se non hai impostato una password
-    database: 'autodb'
+    password: '', // <-- inserisci qui la tua password, se esiste
+    database: 'autodb',
+    port: 3306 // opzionale, solo se diversa da 3306
 });
 
 connection.connect((err) => {

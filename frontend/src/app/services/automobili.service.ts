@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AutomobiliService {
-  private apiUrl = 'http://localhost:3000/api/automobili_disponibili'; // Assicurati che l'URL sia corretto
+  private apiUrl = 'http://localhost:3000/api/automobili_disponibili';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAutomobiliDisponibili(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
