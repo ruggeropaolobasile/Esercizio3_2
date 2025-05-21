@@ -5,7 +5,7 @@ module.exports = {
 
     // Configurazione dei test
     suites: {
-        // Definisci i tuoi test qui
+        // Definisci i tuoi test
         exampleSuite: {
             files: [
                 'tests/example.test.js' // Percorso ai tuoi test
